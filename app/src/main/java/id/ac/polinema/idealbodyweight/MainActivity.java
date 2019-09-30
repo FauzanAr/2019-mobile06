@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnFr
 
 	private AboutFragment aboutFragment;
 	private MenuFragment menuFragment;
+	private BrocaIndexFragment brocaIndexFragment;
 
 
 	@Override
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnFr
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.fragment_container, menuFragment)
 				.commit();
+		brocaIndexFragment = new BrocaIndexFragment();
 	}
 
 	@Override
@@ -48,7 +50,9 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnFr
 
 	@Override
 	public void onBrocaIndexButtonClicked() {
-
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.fragment_container, brocaIndexFragment)
+				.commit();
 	}
 
 	@Override
