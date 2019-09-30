@@ -6,11 +6,17 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import id.ac.polinema.idealbodyweight.R;
+import id.ac.polinema.idealbodyweight.util.BrocaIndex;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,8 +36,29 @@ public class BrocaIndexFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_broca_index, container, false);
+        View view = inflater.inflate(R.layout.fragment_broca_index, container, false);
+        final RadioGroup genderGroup = view.findViewById(R.id.genderGroup);
+        final EditText heightText  = view.findViewById(R.id.editText);
+
+        Button calculateButton = view.findViewById(R.id.button);
+        calculateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    String heightString = heightText.getText().toString();
+                    int checkedId = genderGroup.getCheckedRadioButtonId();
+                    if ((checkedId != -1) && !TextUtils.isEmpty(heightString)) {
+                        int height = Integer.parseInt(heightString);
+                        int gender = (checkedId == R.id.radio_male) ? BrocaIndex.MALE : BrocaIndex.FEMALE;
+                        BrocaIndex brocaIndex = new BrocaIndex(gender, height);
+                        mListener.onCalculateBrocaIndexClicked(brocaIndex.getIndex());
+                    } else {
+                        Toast.makeText(getActivity(), "Please select gender and input your height", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
