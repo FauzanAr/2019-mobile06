@@ -9,8 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import id.ac.polinema.idealbodyweight.R;
+import id.ac.polinema.idealbodyweight.util.BmiIndex;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,16 +34,28 @@ public class BmiIndexFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bmi_index, container, false);
+        View view = inflater.inflate(R.layout.fragment_bmi_index, container, false);
+        final EditText heightText = view.findViewById(R.id.text_height);
+        final EditText massText = view.findViewById(R.id.text_mass);
+
+        Button calButton = view.findViewById(R.id.button_submit);
+        calButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mListener != null){
+                    String tmpHeight = heightText.getText().toString();
+                    String tmpMass = massText.getText().toString();
+                    int mass = Integer.parseInt(tmpMass);
+                    int height = Integer.parseInt(tmpHeight);
+                    BmiIndex bmiIndex = new BmiIndex(mass, height);
+                    mListener.onCalculateBmiIndexClicked(bmiIndex.getResult());
+                }
+            }
+        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -69,7 +84,6 @@ public class BmiIndexFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onCalculateBmiIndexClicked(String index);
     }
 }

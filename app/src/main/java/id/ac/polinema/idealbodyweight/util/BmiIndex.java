@@ -7,7 +7,7 @@ public class BmiIndex {
 
     public BmiIndex(int mass, int height){
         this.mass = mass;
-        this.height = height/100;
+        this.height = Float.parseFloat(String.valueOf(height/100));
         this.result = calculate();
     }
 
