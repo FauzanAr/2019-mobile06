@@ -8,18 +8,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import id.ac.polinema.idealbodyweight.fragment.AboutFragment;
+import id.ac.polinema.idealbodyweight.fragment.BmiIndexFragment;
 import id.ac.polinema.idealbodyweight.fragment.BrocaIndexFragment;
 import id.ac.polinema.idealbodyweight.fragment.MenuFragment;
 import id.ac.polinema.idealbodyweight.fragment.ResultFragment;
 import id.ac.polinema.idealbodyweight.util.BrocaIndex;
 
-public class MainActivity extends AppCompatActivity implements MenuFragment.OnFragmentInteractionListener,BrocaIndexFragment.OnFragmentInteractionListener, ResultFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements MenuFragment.OnFragmentInteractionListener,BrocaIndexFragment.OnFragmentInteractionListener, ResultFragment.OnFragmentInteractionListener,
+		BmiIndexFragment.OnFragmentInteractionListener {
 
 	private AboutFragment aboutFragment;
 	private MenuFragment menuFragment;
 	private BrocaIndexFragment brocaIndexFragment;
 	private ResultFragment resultFragment;
-
+	private BmiIndexFragment bmiIndexFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnFr
 				.replace(R.id.fragment_container, menuFragment)
 				.commit();
 		brocaIndexFragment = new BrocaIndexFragment();
+		bmiIndexFragment = new BmiIndexFragment();
 		resultFragment = new ResultFragment();
 	}
 
@@ -60,7 +63,9 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnFr
 
 	@Override
 	public void onBodyMassIndexButtonClicked() {
-
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.fragment_container, bmiIndexFragment)
+				.commit();
 	}
 
 	@Override
@@ -77,4 +82,12 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnFr
                 .replace(R.id.fragment_container, brocaIndexFragment)
                 .commit();
     }
+
+	@Override
+	public void onCalculateBmiIndexClicked(String index) {
+		resultFragment.setInformation(index);
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.fragment_container, resultFragment)
+				.commit();
+	}
 }
