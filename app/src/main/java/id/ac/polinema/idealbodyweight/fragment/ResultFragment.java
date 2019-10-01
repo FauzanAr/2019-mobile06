@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import id.ac.polinema.idealbodyweight.R;
 
@@ -21,6 +23,7 @@ import id.ac.polinema.idealbodyweight.R;
 public class ResultFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private String information;
 
     public ResultFragment() {
         // Required empty public constructor
@@ -31,15 +34,21 @@ public class ResultFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_result, container, false);
+        View view = inflater.inflate(R.layout.fragment_result, container, false);
+        TextView informationText = view.findViewById(R.id.text_information);
+        informationText.setText(information);
+        Button tryAgainButton = view.findViewById(R.id.button_try_again);
+        tryAgainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onTryAgainButtonClicked("BrocaIndex");
+                }
+            }
+        });
+        return  view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -69,7 +78,10 @@ public class ResultFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onTryAgainButtonClicked(String tag);
+    }
+
+    public void setInformation(String information){
+        this.information = information;
     }
 }
