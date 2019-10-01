@@ -7,7 +7,7 @@ public class BmiIndex {
 
     public BmiIndex(int mass, int height){
         this.mass = mass;
-        this.height = Float.parseFloat(String.valueOf(height/100));
+        this.height = height/100;
         this.result = calculate();
     }
 
@@ -16,17 +16,17 @@ public class BmiIndex {
         tmpResult = mass  / (height*height);
 
         if(tmpResult < 18.50){
-            return "Underweight";
+            return "Underweight Dengan tinggi "+height+" dan berat badan "+mass;
         }else if(tmpResult < 24.99){
-            return "Normal (Healthy Weight)";
+            return "Normal (Healthy Weight) Dengan tinggi "+height+" dan berat badan "+mass;
         }else if(tmpResult < 29.99){
-            return "Pre-Obese";
+            return "Pre-Obese Dengan tinggi "+height+" dan berat badan "+mass;
         }else if (tmpResult < 34.99){
-            return "Obese Class 1";
+            return "Obese Class 1 Dengan tinggi "+height+" dan berat badan "+mass;
         }else if (tmpResult < 39.99){
-            return "Obese Class 2";
+            return "Obese Class 2 Dengan tinggi "+height+" dan berat badan "+mass;
         }else if (tmpResult > 40.00){
-            return "Obese Class 3";
+            return "Obese Class 3 Dengan tinggi "+height+" dan berat badan "+mass;
         }else
             return "Wrong Input!!";
     }
